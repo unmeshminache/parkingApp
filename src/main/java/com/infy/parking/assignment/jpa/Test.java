@@ -9,6 +9,7 @@ public class Test {
         LocalDateTime entry = LocalDateTime.of(2024, 06, 13, 16, 0, 0);
         LocalDateTime exit = LocalDateTime.of(2024, 06, 14, 19, 0, 0);
 
+
         Long totalMinutes= Duration.between(exit, entry).toMinutes();
         Long totalDays=Duration.between(exit,entry).toDays();
         System.out.println(entry.isBefore(exit));

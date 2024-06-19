@@ -6,4 +6,5 @@ public class VehicleRegistartionNotFoundException extends NoSuchElementException
     public VehicleRegistartionNotFoundException(String errorMessage) {
         super(errorMessage);
     }
+
 }

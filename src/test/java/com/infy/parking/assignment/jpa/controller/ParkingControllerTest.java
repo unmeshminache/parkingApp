@@ -60,7 +60,6 @@ public class ParkingControllerTest {
         Assertions.assertNotNull(actualResult);
         Assertions.assertEquals(expectedResult, actualResult);
     }
-
     private Vehicle createVehicle(){
 
         Vehicle vehicle= new Vehicle();

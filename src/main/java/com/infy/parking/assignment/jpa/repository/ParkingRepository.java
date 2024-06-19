@@ -8,4 +8,5 @@ import java.util.List;
 public interface ParkingRepository extends JpaRepository<Vehicle,Integer> {
     <Optional> Vehicle findByVehicleNumberAndStatusIsNull(String VehicleId);
 
+
 }

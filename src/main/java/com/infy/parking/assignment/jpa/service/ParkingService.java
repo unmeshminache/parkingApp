@@ -12,6 +12,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Optional;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
@@ -27,11 +28,12 @@ public class ParkingService {
     private StreetNameRepository streetNameRepository;
 
     public Vehicle getVehicle(String vehicleNumber) throws VehicleRegistartionNotFoundException {
-        Vehicle vehicleDetails = parkingRepository.findByVehicleNumberAndStatusIsNull(vehicleNumber);
-        if (vehicleDetails == null) {
-            throw new VehicleRegistartionNotFoundException("Vehicle not found with given vehicle number : " + vehicleNumber);
+        Optional<Vehicle> vehicleDetails = Optional.ofNullable(parkingRepository.findByVehicleNumberAndStatusIsNull(vehicleNumber));
+        if (vehicleDetails.isPresent()) {
+            return vehicleDetails.get();
+        } else {
+            throw new VehicleRegistartionNotFoundException("Vehicle not found with given vehicle number :" + vehicleNumber);
         }
-        return vehicleDetails;
     }
 
     public Vehicle registerVehicle(Vehicle vehicleDetails) {
@@ -119,4 +121,5 @@ public class ParkingService {
         StreetName streetName = streetNameRepository.findByStreetName(vehicle.getStreetName());
         return streetName.getPrice();
     }
+
 }

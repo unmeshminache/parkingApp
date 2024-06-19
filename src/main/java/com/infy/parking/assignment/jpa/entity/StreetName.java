@@ -42,5 +42,6 @@ public class StreetName {
     public void setPrice(int price) {
         this.price = price;
     }
+
 }
 
