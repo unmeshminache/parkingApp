@@ -28,12 +28,14 @@ public class ParkingService {
     private StreetNameRepository streetNameRepository;
 
     public Vehicle getVehicle(String vehicleNumber) throws VehicleRegistartionNotFoundException {
-        Optional<Vehicle> vehicleDetails = Optional.ofNullable(parkingRepository.findByVehicleNumberAndStatusIsNull(vehicleNumber));
-        if (vehicleDetails.isPresent()) {
-            return vehicleDetails.get();
-        } else {
-            throw new VehicleRegistartionNotFoundException("Vehicle not found with given vehicle number :" + vehicleNumber);
-        }
+//        Optional<Vehicle> vehicleDetails = Optional.ofNullable(parkingRepository.findByVehicleNumberAndStatusIsNull(vehicleNumber));
+//        if (vehicleDetails.isPresent()) {
+//            return vehicleDetails.get();
+//        } else {
+//            throw new VehicleRegistartionNotFoundException("Vehicle not found with given vehicle number :" + vehicleNumber);
+//        }
+        Vehicle vehicle=Optional.ofNullable(parkingRepository.findByVehicleNumberAndStatusIsNull(vehicleNumber)).orElseThrow(()->new VehicleRegistartionNotFoundException("Vehicle not found with given vehicle number :" + vehicleNumber));
+        return vehicle;
     }
 
     public Vehicle registerVehicle(Vehicle vehicleDetails) {
@@ -57,7 +59,7 @@ public class ParkingService {
     }
 
     public double calculateCharges(Vehicle vehicle) {
-        int chargesAsPerStreet = (int) chargesAsPerStreet(vehicle);
+        double chargesAsPerStreet =  chargesAsPerStreet(vehicle);
         LocalDateTime entryTimestamp = LocalDateTime.of(vehicle.getEntryDate().getYear(), vehicle.getEntryDate().getMonth(), vehicle.getEntryDate().getDayOfMonth(), vehicle.getEntryTime().getHour(), vehicle.getEntryTime().getMinute(), vehicle.getEntryTime().getSecond());
         LocalDateTime exitTimestamp = LocalDateTime.of(vehicle.getExitDate().getYear(), vehicle.getExitDate().getMonth(), vehicle.getExitDate().getDayOfMonth(), vehicle.getExitTime().getHour(), vehicle.getExitTime().getMinute(), vehicle.getExitTime().getSecond());
 
@@ -118,7 +120,7 @@ public class ParkingService {
     }
 
     public double chargesAsPerStreet(Vehicle vehicle) {
-        StreetName streetName = streetNameRepository.findByStreetName(vehicle.getStreetName());
+        StreetName streetName = Optional.ofNullable(streetNameRepository.findByStreetName(vehicle.getStreetName())).orElseThrow(()->new RuntimeException("Street not Found :"+vehicle.getStreetName()));
         return streetName.getPrice();
     }
 
