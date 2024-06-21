@@ -46,7 +46,6 @@ public class ParkingController {
     @PutMapping
     @RequestMapping("/deregister/")
     public ResponseEntity<Object> deregisterVehicle(@RequestBody Vehicle vehicle) throws VehicleRegistartionNotFoundException {
-        //parkingService.calculateMinutes(vehicle);
         if (vehicle.getExitDate() == null && vehicle.getExitTime() == null) {
             vehicle.setExitDate(LocalDate.now());
             vehicle.setExitTime(LocalTime.now());
