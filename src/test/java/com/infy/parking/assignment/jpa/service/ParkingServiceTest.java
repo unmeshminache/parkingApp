@@ -59,6 +59,33 @@ public class ParkingServiceTest {
         Assertions.assertEquals(actualResult, 900.0);
     }
 
+    @Test
+    public void testExceptionCalculateMinutes() {
+        Vehicle vehicle = createVehicleToTestException();
+        //Mockito.when(repository.findByVehicleNumberAndStatusIsActive(vehicle.getVehicleNumber())).thenReturn(new Vehicle());
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            service.calculateMinutes(vehicle);
+        });
+    }
+
+    @Test
+    public void testExceptionForRegisterVehicle() {
+        Vehicle vehicle = createVehicleToTestException();
+        Mockito.when(repository.findByVehicleNumberAndStatusIsActive(vehicle.getVehicleNumber())).thenThrow(new VehicleRegistartionNotFoundException("Vehicle not found with given vehicle number :" + vehicle.getVehicleNumber()));
+        Assertions.assertThrows(VehicleRegistartionNotFoundException.class, () -> {
+            service.getVehicle(vehicle.getVehicleNumber());
+        });
+    }
+
+    @Test
+    public void testExceptionRegisterVehicle() {
+        Vehicle vehicle = createVehicleToTestException();
+        Mockito.when(repository.findByVehicleNumberAndStatusIsActive(vehicle.getVehicleNumber())).thenReturn(new Vehicle());
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            service.registerVehicle(vehicle);
+        });
+    }
+
     public Vehicle createVehicleToUpdateDetails() {
         Vehicle vehicle = new Vehicle();
         vehicle.setVehicleNumber("A123");
@@ -86,7 +113,6 @@ public class ParkingServiceTest {
     }
 
     private Vehicle createVehicle() {
-
         Vehicle vehicle = new Vehicle();
         vehicle.setId(1);
         String vehicleId = "12345";
@@ -101,44 +127,17 @@ public class ParkingServiceTest {
         return vehicle;
     }
 
-    @Test
-    public void testExceptionForRegisterVehicle() {
-        Vehicle vehicle=createVehicleToTestException();
-        Mockito.when(repository.findByVehicleNumberAndStatusIsActive(vehicle.getVehicleNumber())).thenThrow(new VehicleRegistartionNotFoundException("Vehicle not found with given vehicle number :" + vehicle.getVehicleNumber()));
-        Assertions.assertThrows(VehicleRegistartionNotFoundException.class, () -> {
-            service.getVehicle(vehicle.getVehicleNumber());
-        });
-    }
-
-    @Test
-    public void testExceptionRegisterVehicle(){
-        Vehicle vehicle= createVehicleToTestException();
-        Mockito.when(repository.findByVehicleNumberAndStatusIsActive(vehicle.getVehicleNumber())).thenReturn(new Vehicle());
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            service.registerVehicle(vehicle);
-        });
-    }
-
     public Vehicle createVehicleToTestException() {
         Vehicle vehicle = new Vehicle();
         vehicle.setVehicleNumber("ZZZ");
         vehicle.setExitTime(LocalTime.of(13, 00, 00));
         vehicle.setExitDate(LocalDate.of(2024, 06, 14));
         vehicle.setStreetName("Devops");
-        vehicle.setEntryDate(LocalDate.of(2024,06,21));
-        vehicle.setEntryTime(LocalTime.of(12,0,0));
-        vehicle.setExitDate(LocalDate.of(2024,06,21));
-        vehicle.setExitTime(LocalTime.of(11,0,0));
+        vehicle.setEntryDate(LocalDate.of(2024, 06, 21));
+        vehicle.setEntryTime(LocalTime.of(12, 0, 0));
+        vehicle.setExitDate(LocalDate.of(2024, 06, 21));
+        vehicle.setExitTime(LocalTime.of(11, 0, 0));
         return vehicle;
-    }
-
-    @Test
-    public void testExceptionCalculateMinutes(){
-        Vehicle vehicle= createVehicleToTestException();
-        //Mockito.when(repository.findByVehicleNumberAndStatusIsActive(vehicle.getVehicleNumber())).thenReturn(new Vehicle());
-        Assertions.assertThrows(RuntimeException.class, () -> {
-            service.calculateMinutes(vehicle);
-        });
     }
 }
 
