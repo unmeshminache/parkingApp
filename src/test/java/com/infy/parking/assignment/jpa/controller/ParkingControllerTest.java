@@ -12,7 +12,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -26,10 +25,10 @@ public class ParkingControllerTest {
 
     @Test
     public void testGetVehicle() throws VehicleRegistartionNotFoundException {
-        String vehicleId = "12345";
+        String vehicleNumber = "12345";
         Vehicle vehicle = createVehicle();
-        Mockito.when(service.getVehicle(vehicleId)).thenReturn(vehicle);
-        ResponseEntity<Object> actualResult = controller.getVehicle(vehicleId);
+        Mockito.when(service.getVehicle(vehicleNumber)).thenReturn(vehicle);
+        ResponseEntity<Object> actualResult = controller.getVehicle(vehicleNumber);
         ResponseEntity<Object> expectedResult = new ResponseEntity<>(vehicle, HttpStatus.OK);
         Assertions.assertNotNull(actualResult);
         Assertions.assertEquals(expectedResult, actualResult);
@@ -41,7 +40,7 @@ public class ParkingControllerTest {
         Vehicle vehicle = createVehicle();
         Mockito.when(service.registerVehicle(vehicle)).thenReturn(vehicle);
         ResponseEntity<Object> actualResult = controller.registerVehicle(vehicle);
-        String message = "Your parking Session has begun with vehicleId " + vehicle.getVehicleNumber();
+        String message = "Your parking Session has begun with vehicle number : " + vehicle.getVehicleNumber();
         ResponseEntity<Object> expectedResult = new ResponseEntity<>(message, HttpStatus.OK);
         Assertions.assertNotNull(actualResult);
         Assertions.assertEquals(expectedResult, actualResult);
@@ -60,7 +59,7 @@ public class ParkingControllerTest {
 
     @Test
     public void testDeRegisterVehicleForNullDateTime() throws VehicleRegistartionNotFoundException {
-        String vehicleId = "12345";
+        String vehicleNumber = "12345";
         Vehicle vehicle = createVehicleForLocalDateTimeISNull();
         Mockito.when(service.updateDetails(vehicle)).thenReturn(100.0);
         String message = "Total parking charges for your vehicle is : " + 100.0 + " Cents";
@@ -74,10 +73,10 @@ public class ParkingControllerTest {
 
     @Test
     public void testRegisterVehicleForNullDateTime() throws VehicleRegistartionNotFoundException {
-        String vehicleId = "12345";
+        String vehicleNumber = "12345";
         Vehicle vehicle = createVehicleForLocalDateTimeISNull();
         ResponseEntity<Object> actualResult = controller.registerVehicle(vehicle);
-        String message = "Your parking Session has begun with vehicleId " + vehicle.getVehicleNumber();
+        String message = "Your parking Session has begun with vehicle number : " + vehicle.getVehicleNumber();
         ResponseEntity<Object> expectedResult = new ResponseEntity<>(message, HttpStatus.OK);
 
         Assertions.assertNotNull(actualResult);
@@ -87,9 +86,9 @@ public class ParkingControllerTest {
 
     private Vehicle createVehicle() {
         Vehicle vehicle = new Vehicle();
-        String vehicleId = "12345";
+        String vehicleNumber = "12345";
         String COMPLETED = "Completed";
-        vehicle.setVehicleNumber(vehicleId);
+        vehicle.setVehicleNumber(vehicleNumber);
         vehicle.setEntryTime(LocalTime.of(12, 0, 0));
         vehicle.setEntryDate(LocalDate.of(2024, 06, 14));
         vehicle.setExitDate(LocalDate.of(2024, 06, 15));
@@ -101,9 +100,9 @@ public class ParkingControllerTest {
     private Vehicle createVehicleForLocalDateTimeISNull() {
 
         Vehicle vehicle = new Vehicle();
-        String vehicleId = "12345";
+        String vehicleNumber = "12345";
         String COMPLETED = "Completed";
-        vehicle.setVehicleNumber(vehicleId);
+        vehicle.setVehicleNumber(vehicleNumber);
         vehicle.setStatus(COMPLETED);
         return vehicle;
     }

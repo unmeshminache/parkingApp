@@ -12,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -115,8 +114,8 @@ public class ParkingServiceTest {
     private Vehicle createVehicle() {
         Vehicle vehicle = new Vehicle();
         vehicle.setId(1);
-        String vehicleId = "12345";
-        vehicle.setVehicleNumber(vehicleId);
+        String vehicleNumber = "12345";
+        vehicle.setVehicleNumber(vehicleNumber);
         vehicle.setEntryTime(LocalTime.of(12, 0, 0));
         vehicle.setEntryDate(LocalDate.of(2024, 06, 14));
         vehicle.setExitDate(LocalDate.of(2024, 06, 15));

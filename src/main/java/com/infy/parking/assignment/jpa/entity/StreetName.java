@@ -7,16 +7,14 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Getter
-@Setter
-@Table(name="street")
+@Table(name = "street")
 public class StreetName {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name="streetname")
+    @Column(name = "streetname")
     private String streetName;
-    @Column(name="price")
+    @Column(name = "price")
     private int price;
 
     public int getId() {

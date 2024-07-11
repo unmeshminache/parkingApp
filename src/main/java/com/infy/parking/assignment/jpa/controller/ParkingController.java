@@ -14,7 +14,7 @@ import java.time.LocalTime;
 @RequestMapping("/")
 public class ParkingController {
 
-    public ParkingService parkingService;
+    private ParkingService parkingService;
 
     @Autowired
     public ParkingController(ParkingService parkingService) {
@@ -25,8 +25,6 @@ public class ParkingController {
     @RequestMapping("/vehicles/{vehicleNumber}")
     public ResponseEntity<Object> getVehicle(@PathVariable("vehicleNumber") String vehicleNumber) throws VehicleRegistartionNotFoundException {
         Vehicle vehicle = parkingService.getVehicle(vehicleNumber);
-        ResponseEntity<Object> responseEntity = null;
-
         return new ResponseEntity<>(vehicle, HttpStatus.OK);
     }
 
@@ -38,7 +36,7 @@ public class ParkingController {
             details.setEntryTime(LocalTime.now());
         }
         Vehicle vehicleDetails = parkingService.registerVehicle(details);
-        String message = "Your parking Session has begun with vehicleId " + details.getVehicleNumber();
+        String message = "Your parking Session has begun with vehicle number : " + details.getVehicleNumber();
         ResponseEntity<Object> responseEntity = new ResponseEntity<>(message, HttpStatus.OK);
         return responseEntity;
     }

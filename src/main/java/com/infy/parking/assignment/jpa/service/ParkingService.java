@@ -6,21 +6,17 @@ import com.infy.parking.assignment.jpa.exception.VehicleRegistartionNotFoundExce
 import com.infy.parking.assignment.jpa.repository.ParkingRepository;
 import com.infy.parking.assignment.jpa.repository.StreetNameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.ErrorResponse;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-
 @Service
 public class ParkingService {
+
     private static final String COMPLETED = "Completed";
     private static final String SUNDAY = "sunday";
     private static final String ACTIVE = "Active";
+
     @Autowired
     private ParkingRepository parkingRepository;
     @Autowired
@@ -73,12 +69,5 @@ public class ParkingService {
         }
         return totalMinutes;
     }
-
-//    @ExceptionHandler(value = VehicleRegistartionNotFoundException.class)
-//    @ResponseStatus(HttpStatus.CONFLICT)
-//    public ErrorResponse vehicleRegistartionNotFoundException(VehicleRegistartionNotFoundException ex) {
-//        return new ErrorResponse(HttpStatus.CONFLICT.value(), ex.getMessage());
-//    }
-
 }
 

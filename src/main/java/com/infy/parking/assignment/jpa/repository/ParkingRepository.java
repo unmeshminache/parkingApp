@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ParkingRepository extends JpaRepository<Vehicle,Integer> {
-    //@Query("SELECT p from parking p where p.vehicle_number = :vehicleNumber AND p.status = 'Active'")
     @Query("SELECT p from Vehicle p where p.vehicleNumber = :vehicleNumber AND p.status = 'Active'")
     Vehicle findByVehicleNumberAndStatusIsActive(@Param("vehicleNumber") String vehicleNumber);
 
