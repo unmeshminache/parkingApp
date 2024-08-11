@@ -61,7 +61,6 @@ public class ParkingServiceTest {
     @Test
     public void testExceptionCalculateMinutes() {
         Vehicle vehicle = createVehicleToTestException();
-        //Mockito.when(repository.findByVehicleNumberAndStatusIsActive(vehicle.getVehicleNumber())).thenReturn(new Vehicle());
         Assertions.assertThrows(RuntimeException.class, () -> {
             service.calculateMinutes(vehicle);
         });

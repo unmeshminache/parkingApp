@@ -1,17 +1,11 @@
 package com.infy.parking.assignment.jpa.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Entity
 @Table(name = "parked_vehicle")
-@Getter
-@Setter
-@AllArgsConstructor
 public class ParkedVehicles {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
