@@ -1,6 +1,8 @@
 package com.infy.parking.assignment.jpa.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,8 @@ public class Vehicle {
     @Id
     @GeneratedValue
     private int id;
+    @NotNull(message = "Vehicle number Should not be null")
+    @Size(min = 4, max=10, message = "Vehicle Number should be equal or grater than 4 character and less or equal to 10 character")
     @Column(name = "vehicle_number")
     private String vehicleNumber;
     @Column(name = "entry_Date")

@@ -3,6 +3,7 @@ package com.infy.parking.assignment.jpa.controller;
 import com.infy.parking.assignment.jpa.entity.Vehicle;
 import com.infy.parking.assignment.jpa.exception.VehicleRegistartionNotFoundException;
 import com.infy.parking.assignment.jpa.service.ParkingService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class ParkingController {
 
     @PostMapping
     @RequestMapping("/register/")
-    public ResponseEntity<Object> registerVehicle(@RequestBody Vehicle details) {
+    public ResponseEntity<Object> registerVehicle(@Valid @RequestBody Vehicle details) {
         if (details.getEntryDate() == null && details.getEntryTime() == null) {
             details.setEntryDate(LocalDate.now());
             details.setEntryTime(LocalTime.now());
@@ -43,7 +44,7 @@ public class ParkingController {
 
     @PutMapping
     @RequestMapping("/deregister/")
-    public ResponseEntity<Object> deregisterVehicle(@RequestBody Vehicle vehicle) throws VehicleRegistartionNotFoundException {
+    public ResponseEntity<Object> deregisterVehicle(@Valid Vehicle vehicle) throws VehicleRegistartionNotFoundException {
         if (vehicle.getExitDate() == null && vehicle.getExitTime() == null) {
             vehicle.setExitDate(LocalDate.now());
             vehicle.setExitTime(LocalTime.now());
